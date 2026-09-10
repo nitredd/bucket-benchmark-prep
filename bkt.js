@@ -1,4 +1,4 @@
-function bucketAdd(aCompanyId, aUserId, aTs, aTitle, aEventLabel, aIsRemote) {
+function bucketAdd(aCompanyId, aUserId, aTs, aTitle, aEventLabels, aIsRemote) {
     db.bucket_calendar_events.updateOne({
         companyId: aCompanyId, userId: aUserId, cnt: {$lt: 100}
     }, {
@@ -6,7 +6,7 @@ function bucketAdd(aCompanyId, aUserId, aTs, aTitle, aEventLabel, aIsRemote) {
             data: {
                 ts: aTs,
                 title: aTitle,
-                eventLabels: aEventLabel,
+                eventLabels: aEventLabels,
                 isRemote: aIsRemote
             }
         },
@@ -19,7 +19,7 @@ function bucketAdd(aCompanyId, aUserId, aTs, aTitle, aEventLabel, aIsRemote) {
 
 var bucketArr = [];
 
-function bucketAdd2(aCompanyId, aUserId, aTs, aTitle, aEventLabel, aIsRemote) {
+function bucketAdd2(aCompanyId, aUserId, aTs, aTitle, aEventLabels, aIsRemote) {
     bucketArr.append(
         {
             updateOne: {
@@ -31,7 +31,7 @@ function bucketAdd2(aCompanyId, aUserId, aTs, aTitle, aEventLabel, aIsRemote) {
                         data: {
                             ts: aTs,
                             title: aTitle,
-                            eventLabels: aEventLabel,
+                            eventLabels: aEventLabels,
                             isRemote: aIsRemote
                         }
                     },
@@ -73,7 +73,7 @@ function loadData() {
     var cur = db.calendar_events.find({});
     while (cur.hasNext()) {
         obj = cur.next();
-        bucketAdd2(obj.companyId, obj.userId, obj.ts, obj.title, obj.eventLabel, obj.isRemote);
+        bucketAdd2(obj.companyId, obj.userId, obj.ts, obj.title, obj.eventLabels, obj.isRemote);
     }
 
     flush()
