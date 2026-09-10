@@ -48,7 +48,7 @@ function bucketAdd2(aCompanyId, aUserId, aTs, aTitle, aEventLabel, aIsRemote) {
                 writeConcern: {w: 1}
             }
         );
-        bucketAdd = [];
+        bucketArr = [];
     }
 }
 
@@ -63,7 +63,7 @@ function flush() {
             writeConcern: {w: 1}
         }
     );
-    bucketAdd = [];
+    bucketArr = [];
 }
 
 function loadData() {
